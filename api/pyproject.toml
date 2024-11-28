@@ -1,0 +1,22 @@
+[project]
+name = "api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Leshnevskyi", email = "leshnevskyi@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.115.5",
+    "opencv-python-headless>=4.10.0.84",
+    "python-multipart>=0.0.17",
+    "uvicorn>=0.32.1",
+]
+
+[project.scripts]
+api = "api:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
