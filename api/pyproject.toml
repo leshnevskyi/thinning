@@ -11,6 +11,7 @@ dependencies = [
     "fastapi[standard]>=0.115.5",
     "opencv-python-headless>=4.10.0.84",
     "python-multipart>=0.0.17",
+    "scikit-image>=0.24.0",
     "uvicorn>=0.32.1",
 ]
 
