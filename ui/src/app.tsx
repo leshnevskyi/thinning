@@ -2,15 +2,28 @@ import {
   FileUploadDropzone,
   FileUploadRoot,
 } from "@/components/ui/file-upload";
+import { SegmentedControl } from "@/components/ui/segmented-control";
 import { Image, Box, Flex, Heading } from "@chakra-ui/react";
 import { useState } from "react";
+
+type ThinningAlgorithm = "zhang-suen" | "hilditch";
 
 function App() {
   const [originalImageSource, setOriginalImageSource] = useState<string>();
   const [thinnedImageSource, setThinnedImageSource] = useState<string>();
+  const [thinningAlgorithm, setThinningAlgorithm] =
+    useState<ThinningAlgorithm>("zhang-suen");
 
   return (
     <Flex padding={5} height="100vh" flexDirection="column" gap={5}>
+      <SegmentedControl
+        items={["Zhang-Suen", "Hilditch"]}
+        defaultValue="Zhang-Suen"
+        alignSelf="center"
+        onValueChange={(details) =>
+          setThinningAlgorithm(details.value.toLowerCase() as ThinningAlgorithm)
+        }
+      />
       {thinnedImageSource && originalImageSource && (
         <Flex height="full" width="full" overflow="hidden" gap={5}>
           <Flex flex={1} flexDirection="column" gap={3}>
@@ -44,11 +57,13 @@ function App() {
           onFileAccept={async (details) => {
             const formData = new FormData();
             const file = details.files[0];
+            console.log(thinningAlgorithm);
+
             formData.append("file", file);
 
             try {
               const response = await fetch(
-                "http://localhost:8000/image-thinning",
+                `http://localhost:8000/image-thinning?algorithm=${thinningAlgorithm}`,
                 {
                   method: "POST",
                   body: formData,
